@@ -108,13 +108,24 @@ function App() {
         if (dataArray && dataArray.length > 0) {
           const data = dataArray[0];
           
-          // Verificar si se encontraron datos
-          if (data.success && data.datos_adquiriente && data.datos_adquiriente.encontrado) {
+          // Verificar si la consulta fue exitosa
+          if (data.success === false) {
+            // Caso cuando el NIT no existe en la base de datos
+            setShowNoDataDialog(true);
+            setConsultError(false);
+          } else if (data.success && 
+                     data.ResponseDian && 
+                     data.ResponseDian.GetAcquirerResponse && 
+                     data.ResponseDian.GetAcquirerResponse.GetAcquirerResult &&
+                     data.ResponseDian.GetAcquirerResponse.GetAcquirerResult.StatusCode === "200") {
+            
+            const result = data.ResponseDian.GetAcquirerResponse.GetAcquirerResult;
+            
             // Actualizar campos con la respuesta
             setFormData(prev => ({
               ...prev,
-              razonSocial: data.datos_adquiriente.nombre_razon_social || '',
-              email: data.datos_adquiriente.correo_electronico || ''
+              razonSocial: result.ReceiverName || '',
+              email: result.ReceiverEmail || ''
             }));
             
             setIsConsulted(true);
