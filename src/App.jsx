@@ -12,7 +12,9 @@ import {
   User,
   ChevronDown,
   Search,
-  Loader2
+  Loader2,
+  X,
+  Info
 } from 'lucide-react';
 import './App.css';
 
@@ -48,6 +50,7 @@ function App() {
   const [phoneError, setPhoneError] = useState(false);
   const [isConsulted, setIsConsulted] = useState(false);
   const [consultError, setConsultError] = useState(false);
+  const [showNoDataDialog, setShowNoDataDialog] = useState(false);
   
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
@@ -116,17 +119,21 @@ function App() {
             
             setIsConsulted(true);
           } else {
-            throw new Error('No se encontraron datos para este documento');
+            setShowNoDataDialog(true);
+            setConsultError(false);
           }
         } else {
-          throw new Error('Respuesta vacía del servidor');
+          setShowNoDataDialog(true);
+          setConsultError(false);
         }
       } else {
-        throw new Error('Error en la consulta');
+        setShowNoDataDialog(true);
+        setConsultError(false);
       }
     } catch (error) {
       console.error('Error:', error);
-      setConsultError(true);
+      setShowNoDataDialog(true);
+      setConsultError(false);
     } finally {
       setConsultLoading(false);
     }
@@ -320,6 +327,41 @@ function App() {
             <div className="message error-alert" style={{display: 'flex'}}>
               <AlertCircle className="message-icon" />
               {!isConsulted ? 'Debe consultar los datos antes de continuar' : 'Error al consultar. Verifique los datos ingresados.'}
+            </div>
+          )}
+
+          {/* Modal de instrucción cuando no se encuentran datos */}
+          {showNoDataDialog && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <Info className="modal-icon" />
+                  <h3>NIT no encontrado</h3>
+                  <button 
+                    className="modal-close" 
+                    onClick={() => setShowNoDataDialog(false)}
+                  >
+                    <X className="close-icon" />
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p>
+                    No se encontraron datos para el documento ingresado. 
+                    Por favor, verifique que haya ingresado <strong>únicamente el número del documento sin el dígito de verificación</strong>.
+                  </p>
+                  <p className="modal-example">
+                    <strong>Ejemplo:</strong> Si su NIT es 900123456-7, ingrese solamente: <strong>900123456</strong>
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button 
+                    className="modal-button" 
+                    onClick={() => setShowNoDataDialog(false)}
+                  >
+                    Entendido
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 

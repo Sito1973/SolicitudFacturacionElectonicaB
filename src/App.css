@@ -319,6 +319,139 @@ input:invalid {
   animation: spin 1s linear infinite;
 }
 
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background: #eee2df;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 20px 60px rgba(179, 106, 94, 0.4);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+  padding: 25px 25px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.modal-header h3 {
+  color: #b36a5e;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
+
+.modal-icon {
+  width: 24px;
+  height: 24px;
+  color: #c97c5d;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #c89f9c;
+}
+
+.modal-close:hover {
+  background: rgba(200, 159, 156, 0.1);
+  color: #b36a5e;
+}
+
+.close-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.modal-body {
+  padding: 20px 25px;
+}
+
+.modal-body p {
+  color: #333;
+  line-height: 1.6;
+  margin: 0 0 15px;
+  font-size: 14px;
+}
+
+.modal-example {
+  background: #f4edeb;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #c97c5d;
+  margin-top: 15px !important;
+}
+
+.modal-footer {
+  padding: 0 25px 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-button {
+  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+  color: #eee2df;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 124, 93, 0.35);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 480px) {
   .form-container {
     padding: 35px 25px;
@@ -340,5 +473,26 @@ input:invalid {
   .header-icon {
     width: 24px;
     height: 24px;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .modal-header {
+    padding: 20px 20px 0;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-body {
+    padding: 15px 20px;
+  }
+
+  .modal-footer {
+    padding: 0 20px 20px;
   }
 }
