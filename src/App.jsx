@@ -25,7 +25,7 @@ function App() {
   const [phoneError, setPhoneError] = useState(false);
   
   // Obtener URL del webhook desde variable de entorno o usar default
-  const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://tu-dominio.n8n.cloud/webhook/factura-electronica';
+  const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
