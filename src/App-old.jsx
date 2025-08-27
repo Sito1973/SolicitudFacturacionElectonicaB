@@ -161,14 +161,13 @@ function App() {
         setShowSuccess(true);
         setFormData({
           numeroMesa: '',
-          tipoDocumento: '',
-          numeroDocumento: '',
           razonSocial: '',
           email: '',
+          tipoDocumento: '',
+          numeroDocumento: '',
           telefono: ''
         });
         setPhoneError(false);
-        setIsConsulted(false);
         
         setTimeout(() => {
           setShowSuccess(false);
@@ -209,7 +208,6 @@ function App() {
       
       <div className="form-container">
         <form onSubmit={handleSubmit}>
-          {/* PASO 1: Campos iniciales */}
           <div className="form-group">
             <div className="label-container">
               <Hash className="label-icon" />
@@ -228,6 +226,50 @@ function App() {
                 required
                 placeholder="Ingrese el número de mesa"
                 autoComplete="off"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <div className="label-container">
+              <Building2 className="label-icon" />
+              <label htmlFor="razonSocial">
+                Razón Social <span className="required">*</span>
+              </label>
+            </div>
+            <div className="input-container">
+              <Building2 className="input-icon" />
+              <input 
+                type="text" 
+                id="razonSocial" 
+                name="razonSocial" 
+                value={formData.razonSocial}
+                onChange={handleInputChange}
+                required
+                placeholder="Ingrese la razón social"
+                autoComplete="organization"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <div className="label-container">
+              <Mail className="label-icon" />
+              <label htmlFor="email">
+                Correo Electrónico <span className="required">*</span>
+              </label>
+            </div>
+            <div className="input-container">
+              <Mail className="input-icon" />
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                placeholder="correo@empresa.com"
+                autoComplete="email"
               />
             </div>
           </div>
@@ -283,130 +325,49 @@ function App() {
             </div>
           </div>
 
-          {/* Botón Consultar */}
-          <button 
-            type="button" 
-            className="consult-button" 
-            onClick={handleConsult}
-            disabled={consultLoading || !formData.tipoDocumento || !formData.numeroDocumento}
-          >
-            {consultLoading ? (
+          <div className="form-group">
+            <div className="label-container">
+              <Phone className="label-icon" />
+              <label htmlFor="telefono">
+                Teléfono <span className="required">*</span> (10 dígitos)
+              </label>
+            </div>
+            <div className="input-container">
+              <Phone className="input-icon" />
+              <input 
+                type="tel" 
+                id="telefono" 
+                name="telefono" 
+                value={formData.telefono}
+                onChange={handleInputChange}
+                required
+                pattern="[0-9]{10}"
+                maxLength="10"
+                placeholder="3001234567"
+                autoComplete="tel"
+              />
+            </div>
+            {phoneError && (
+              <div className="error-message">
+                <AlertCircle className="error-icon" />
+                El teléfono debe tener exactamente 10 dígitos
+              </div>
+            )}
+          </div>
+
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? (
               <>
-                <Loader2 className="button-icon animate-spin" />
-                Consultando...
+                <span className="loading"></span>
+                Enviando...
               </>
             ) : (
               <>
-                <Search className="button-icon" />
-                Consultar
+                <Send className="button-icon" />
+                Solicitar
               </>
             )}
           </button>
-
-          {/* Mensaje de error de consulta */}
-          {consultError && (
-            <div className="message error-alert" style={{display: 'flex'}}>
-              <AlertCircle className="message-icon" />
-              {!isConsulted ? 'Debe consultar los datos antes de continuar' : 'Error al consultar. Verifique los datos ingresados.'}
-            </div>
-          )}
-
-          {/* PASO 2: Campos que aparecen después de consultar */}
-          {isConsulted && (
-            <>
-              <div className="form-group">
-                <div className="label-container">
-                  <Building2 className="label-icon" />
-                  <label htmlFor="razonSocial">
-                    Razón Social <span className="required">*</span>
-                  </label>
-                </div>
-                <div className="input-container">
-                  <Building2 className="input-icon" />
-                  <input 
-                    type="text" 
-                    id="razonSocial" 
-                    name="razonSocial" 
-                    value={formData.razonSocial}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Razón social de la empresa"
-                    autoComplete="organization"
-                    readOnly
-                    className="readonly-input"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <div className="label-container">
-                  <Mail className="label-icon" />
-                  <label htmlFor="email">
-                    Correo Electrónico <span className="required">*</span>
-                  </label>
-                </div>
-                <div className="input-container">
-                  <Mail className="input-icon" />
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="correo@empresa.com"
-                    autoComplete="email"
-                    readOnly
-                    className="readonly-input"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <div className="label-container">
-                  <Phone className="label-icon" />
-                  <label htmlFor="telefono">
-                    Teléfono <span className="required">*</span> (10 dígitos)
-                  </label>
-                </div>
-                <div className="input-container">
-                  <Phone className="input-icon" />
-                  <input 
-                    type="tel" 
-                    id="telefono" 
-                    name="telefono" 
-                    value={formData.telefono}
-                    onChange={handleInputChange}
-                    required
-                    pattern="[0-9]{10}"
-                    maxLength="10"
-                    placeholder="3001234567"
-                    autoComplete="tel"
-                  />
-                </div>
-                {phoneError && (
-                  <div className="error-message">
-                    <AlertCircle className="error-icon" />
-                    El teléfono debe tener exactamente 10 dígitos
-                  </div>
-                )}
-              </div>
-
-              <button type="submit" className="submit-button" disabled={loading}>
-                {loading ? (
-                  <>
-                    <span className="loading"></span>
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Send className="button-icon" />
-                    Solicitar
-                  </>
-                )}
-              </button>
-            </>
-          )}
 
           {showSuccess && (
             <div className="message success-message">
