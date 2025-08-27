@@ -101,31 +101,48 @@ label {
   align-items: center;
 }
 
-.nit-container {
+.select-container {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
-.nit-input {
-  flex: 1;
+.select-input {
+  width: 100%;
+  padding: 14px 15px 14px 45px;
+  border: 2px solid #c89f9c;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #fbf9f8;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
 }
 
-.nit-input-small {
-  flex: 0 0 60px;
+.select-input:focus {
+  outline: none;
+  border-color: #b36a5e;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(179, 106, 94, 0.12);
 }
 
-.nit-input-small input {
-  padding-left: 15px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.nit-separator {
-  font-size: 18px;
-  font-weight: 700;
+.select-input:focus ~ .input-icon {
   color: #b36a5e;
-  padding: 0 5px;
+}
+
+.select-icon {
+  position: absolute;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  color: #c89f9c;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.select-container:hover .select-icon {
+  color: #b36a5e;
 }
 
 .input-icon {

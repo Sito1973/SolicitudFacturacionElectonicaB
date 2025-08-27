@@ -8,17 +8,34 @@ import {
   CheckCircle, 
   AlertCircle,
   Send,
-  Mail
+  Mail,
+  IdCard,
+  ChevronDown
 } from 'lucide-react';
 import './App.css';
 
 function App() {
+  const tiposDocumento = {
+    '11': 'Registro civil',
+    '12': 'Tarjeta de identidad', 
+    '13': 'Cédula de ciudadanía',
+    '21': 'Tarjeta de extranjería',
+    '22': 'Cédula de extranjería',
+    '31': 'NIT',
+    '41': 'Pasaporte',
+    '42': 'Documento de identificación extranjero',
+    '47': 'PEP (Permiso Especial de Permanencia)',
+    '48': 'PPT (Permiso Protección Temporal)',
+    '50': 'NIT de otro país',
+    '91': 'NUIP'
+  };
+
   const [formData, setFormData] = useState({
     numeroMesa: '',
     razonSocial: '',
     email: '',
-    nitParte1: '',
-    nitParte2: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
     telefono: ''
   });
   
@@ -37,8 +54,9 @@ function App() {
       const cleanValue = value.replace(/[^0-9]/g, '');
       setFormData(prev => ({ ...prev, [name]: cleanValue }));
       setPhoneError(cleanValue.length > 0 && cleanValue.length !== 10);
-    } else if (name === 'nitParte1' || name === 'nitParte2') {
-      const cleanValue = value.replace(/[^0-9]/g, '');
+    } else if (name === 'numeroDocumento') {
+      // Permitir números y algunas letras para documentos como pasaportes
+      const cleanValue = value.replace(/[^0-9A-Za-z]/g, '');
       setFormData(prev => ({ ...prev, [name]: cleanValue }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -68,7 +86,9 @@ function App() {
           numeroMesa: formData.numeroMesa,
           razonSocial: formData.razonSocial,
           email: formData.email,
-          nit: `${formData.nitParte1}-${formData.nitParte2}`,
+          tipoDocumento: formData.tipoDocumento,
+          tipoDocumentoTexto: tiposDocumento[formData.tipoDocumento],
+          numeroDocumento: formData.numeroDocumento,
           telefono: formData.telefono,
           timestamp: new Date().toISOString()
         })
@@ -80,8 +100,8 @@ function App() {
           numeroMesa: '',
           razonSocial: '',
           email: '',
-          nitParte1: '',
-          nitParte2: '',
+          tipoDocumento: '',
+          numeroDocumento: '',
           telefono: ''
         });
         setPhoneError(false);
@@ -193,39 +213,52 @@ function App() {
 
           <div className="form-group">
             <div className="label-container">
-              <CreditCard className="label-icon" />
-              <label>
-                NIT <span className="required">*</span>
+              <IdCard className="label-icon" />
+              <label htmlFor="tipoDocumento">
+                Tipo de Documento <span className="required">*</span>
               </label>
             </div>
-            <div className="nit-container">
-              <div className="input-container nit-input">
-                <CreditCard className="input-icon" />
-                <input 
-                  type="text" 
-                  id="nitParte1" 
-                  name="nitParte1" 
-                  value={formData.nitParte1}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="900123456"
-                  maxLength="10"
-                  autoComplete="organization-tax-id"
-                />
-              </div>
-              <span className="nit-separator">-</span>
-              <div className="input-container nit-input-small">
-                <input 
-                  type="text" 
-                  id="nitParte2" 
-                  name="nitParte2" 
-                  value={formData.nitParte2}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="7"
-                  maxLength="1"
-                />
-              </div>
+            <div className="select-container">
+              <IdCard className="input-icon" />
+              <select 
+                id="tipoDocumento" 
+                name="tipoDocumento" 
+                value={formData.tipoDocumento}
+                onChange={handleInputChange}
+                required
+                className="select-input"
+              >
+                <option value="">Seleccione tipo de documento</option>
+                {Object.entries(tiposDocumento).map(([codigo, nombre]) => (
+                  <option key={codigo} value={codigo}>
+                    {nombre}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="select-icon" />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <div className="label-container">
+              <CreditCard className="label-icon" />
+              <label htmlFor="numeroDocumento">
+                Número de Documento <span className="required">*</span>
+              </label>
+            </div>
+            <div className="input-container">
+              <CreditCard className="input-icon" />
+              <input 
+                type="text" 
+                id="numeroDocumento" 
+                name="numeroDocumento" 
+                value={formData.numeroDocumento}
+                onChange={handleInputChange}
+                required
+                placeholder="Ingrese el número del documento"
+                maxLength="15"
+                autoComplete="off"
+              />
             </div>
           </div>
 
