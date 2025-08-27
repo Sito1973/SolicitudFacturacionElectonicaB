@@ -1,0 +1,263 @@
+.container {
+  background: #eee2df;
+  border-radius: 24px;
+  box-shadow: 0 25px 70px rgba(179, 106, 94, 0.25);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.header {
+  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+  padding: 35px;
+  text-align: center;
+  position: relative;
+}
+
+.logo-container {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #eed7c5;
+  padding: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.default-logo {
+  width: 60px;
+  height: 60px;
+  color: #b36a5e;
+}
+
+.default-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  color: #eee2df;
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.header-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.form-container {
+  padding: 45px 35px;
+  background: #eee2df;
+}
+
+.form-group {
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.label-icon {
+  width: 18px;
+  height: 18px;
+  color: #b36a5e;
+}
+
+label {
+  color: #b36a5e;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.required {
+  color: #c97c5d;
+  font-weight: 700;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+  color: #c89f9c;
+  pointer-events: none;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+input {
+  width: 100%;
+  padding: 14px 15px 14px 45px;
+  border: 2px solid #c89f9c;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #fbf9f8;
+  color: #333;
+}
+
+input:focus {
+  outline: none;
+  border-color: #b36a5e;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(179, 106, 94, 0.12);
+}
+
+input:focus ~ .input-icon {
+  color: #b36a5e;
+}
+
+input:invalid {
+  border-color: #c97c5d;
+}
+
+.error-message {
+  color: #c97c5d;
+  font-size: 13px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.error-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+  color: #eee2df;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  box-shadow: 0 6px 20px rgba(201, 124, 93, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.submit-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(201, 124, 93, 0.45);
+}
+
+.submit-button:active {
+  transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message {
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 25px;
+  display: flex;
+  animation: slideIn 0.3s ease;
+  font-weight: 500;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.success-message {
+  background: #c89f9c;
+  color: #eee2df;
+}
+
+.error-alert {
+  background: #c97c5d;
+  color: #eee2df;
+}
+
+.message-icon {
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(238, 226, 223, 0.3);
+  border-radius: 50%;
+  border-top-color: #eee2df;
+  animation: spin 0.8s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { 
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 35px 25px;
+  }
+  
+  h1 {
+    font-size: 22px;
+  }
+
+  .header {
+    padding: 30px;
+  }
+}

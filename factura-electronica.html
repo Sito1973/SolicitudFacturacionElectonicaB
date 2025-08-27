@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Factura Electrónica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #eee2df;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #eed7c5;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            color: #eee2df;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container {
+            padding: 40px 30px;
+            background: #eee2df;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b36a5e;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #c97c5d;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #c89f9c;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #fbf9f8;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #b36a5e;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(179, 106, 94, 0.1);
+        }
+
+        input:invalid {
+            border-color: #c97c5d;
+        }
+
+        .error-message {
+            color: #c97c5d;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+            color: #eee2df;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(201, 124, 93, 0.4);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 124, 93, 0.5);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: #c89f9c;
+            color: #eee2df;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-alert {
+            background: #c97c5d;
+            color: #eee2df;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="bandidos.png" alt="Bandidos Logo">
+            </div>
+            <h1>Solicitud de Factura Electrónica</h1>
+        </div>
+        
+        <div class="form-container">
+            <form id="facturaForm">
+                <div class="form-group">
+                    <label for="numeroMesa">
+                        Número de Mesa <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="numeroMesa" 
+                        name="numeroMesa" 
+                        required
+                        placeholder="Ingrese el número de mesa"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="razonSocial">
+                        Razón Social <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="razonSocial" 
+                        name="razonSocial" 
+                        required
+                        placeholder="Ingrese la razón social"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="nit">
+                        NIT <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nit" 
+                        name="nit" 
+                        required
+                        placeholder="Ingrese el NIT"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">
+                        Teléfono <span class="required">*</span> (10 dígitos)
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="telefono" 
+                        name="telefono" 
+                        required
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        placeholder="3001234567"
+                    >
+                    <span class="error-message" id="phoneError">
+                        El teléfono debe tener exactamente 10 dígitos
+                    </span>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">
+                    Solicitar
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    Solicitud enviada exitosamente
+                </div>
+
+                <div class="error-alert" id="errorAlert">
+                    Error al enviar la solicitud. Por favor, intente nuevamente.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('facturaForm');
+        const phoneInput = document.getElementById('telefono');
+        const phoneError = document.getElementById('phoneError');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorAlert = document.getElementById('errorAlert');
+
+        // Webhook URL de n8n (reemplazar con tu URL real)
+        const WEBHOOK_URL = 'https://tu-dominio.n8n.cloud/webhook/factura-electronica';
+
+        // Validación del teléfono en tiempo real
+        phoneInput.addEventListener('input', function(e) {
+            // Solo permitir números
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            // Validar longitud
+            if (this.value.length !== 10 && this.value.length > 0) {
+                phoneError.style.display = 'block';
+                this.style.borderColor = '#c97c5d';
+            } else {
+                phoneError.style.display = 'none';
+                this.style.borderColor = '#c89f9c';
+            }
+        });
+
+        // Manejo del envío del formulario
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Resetear mensajes
+            successMessage.style.display = 'none';
+            errorAlert.style.display = 'none';
+            
+            // Validar teléfono
+            if (phoneInput.value.length !== 10) {
+                phoneError.style.display = 'block';
+                phoneInput.focus();
+                return;
+            }
+            
+            // Obtener datos del formulario
+            const formData = {
+                numeroMesa: document.getElementById('numeroMesa').value,
+                razonSocial: document.getElementById('razonSocial').value,
+                nit: document.getElementById('nit').value,
+                telefono: phoneInput.value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Cambiar estado del botón
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span> Enviando...';
+            
+            try {
+                // Enviar datos al webhook de n8n
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    // Mostrar mensaje de éxito
+                    successMessage.style.display = 'block';
+                    
+                    // Limpiar formulario
+                    form.reset();
+                    
+                    // Ocultar mensaje después de 5 segundos
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Error en el servidor');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorAlert.style.display = 'block';
+                
+                // Ocultar mensaje de error después de 5 segundos
+                setTimeout(() => {
+                    errorAlert.style.display = 'none';
+                }, 5000);
+            } finally {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Solicitar';
+            }
+        });
+
+        // Prevenir envío con Enter si el teléfono no es válido
+        form.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && phoneInput.value.length !== 10) {
+                e.preventDefault();
+                phoneError.style.display = 'block';
+                phoneInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
