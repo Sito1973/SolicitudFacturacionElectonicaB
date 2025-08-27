@@ -101,6 +101,33 @@ label {
   align-items: center;
 }
 
+.nit-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nit-input {
+  flex: 1;
+}
+
+.nit-input-small {
+  flex: 0 0 60px;
+}
+
+.nit-input-small input {
+  padding-left: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.nit-separator {
+  font-size: 18px;
+  font-weight: 700;
+  color: #b36a5e;
+  padding: 0 5px;
+}
+
 .input-icon {
   position: absolute;
   left: 15px;

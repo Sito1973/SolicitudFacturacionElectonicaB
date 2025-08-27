@@ -7,7 +7,8 @@ import {
   FileText, 
   CheckCircle, 
   AlertCircle,
-  Send
+  Send,
+  Mail
 } from 'lucide-react';
 import './App.css';
 
@@ -15,7 +16,9 @@ function App() {
   const [formData, setFormData] = useState({
     numeroMesa: '',
     razonSocial: '',
-    nit: '',
+    email: '',
+    nitParte1: '',
+    nitParte2: '',
     telefono: ''
   });
   
@@ -34,6 +37,9 @@ function App() {
       const cleanValue = value.replace(/[^0-9]/g, '');
       setFormData(prev => ({ ...prev, [name]: cleanValue }));
       setPhoneError(cleanValue.length > 0 && cleanValue.length !== 10);
+    } else if (name === 'nitParte1' || name === 'nitParte2') {
+      const cleanValue = value.replace(/[^0-9]/g, '');
+      setFormData(prev => ({ ...prev, [name]: cleanValue }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
@@ -59,7 +65,11 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
+          numeroMesa: formData.numeroMesa,
+          razonSocial: formData.razonSocial,
+          email: formData.email,
+          nit: `${formData.nitParte1}-${formData.nitParte2}`,
+          telefono: formData.telefono,
           timestamp: new Date().toISOString()
         })
       });
@@ -69,7 +79,9 @@ function App() {
         setFormData({
           numeroMesa: '',
           razonSocial: '',
-          nit: '',
+          email: '',
+          nitParte1: '',
+          nitParte2: '',
           telefono: ''
         });
         setPhoneError(false);
@@ -130,6 +142,7 @@ function App() {
                 onChange={handleInputChange}
                 required
                 placeholder="Ingrese el número de mesa"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -151,6 +164,29 @@ function App() {
                 onChange={handleInputChange}
                 required
                 placeholder="Ingrese la razón social"
+                autoComplete="organization"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <div className="label-container">
+              <Mail className="label-icon" />
+              <label htmlFor="email">
+                Correo Electrónico <span className="required">*</span>
+              </label>
+            </div>
+            <div className="input-container">
+              <Mail className="input-icon" />
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                placeholder="correo@empresa.com"
+                autoComplete="email"
               />
             </div>
           </div>
@@ -158,21 +194,38 @@ function App() {
           <div className="form-group">
             <div className="label-container">
               <CreditCard className="label-icon" />
-              <label htmlFor="nit">
+              <label>
                 NIT <span className="required">*</span>
               </label>
             </div>
-            <div className="input-container">
-              <CreditCard className="input-icon" />
-              <input 
-                type="text" 
-                id="nit" 
-                name="nit" 
-                value={formData.nit}
-                onChange={handleInputChange}
-                required
-                placeholder="Ingrese el NIT"
-              />
+            <div className="nit-container">
+              <div className="input-container nit-input">
+                <CreditCard className="input-icon" />
+                <input 
+                  type="text" 
+                  id="nitParte1" 
+                  name="nitParte1" 
+                  value={formData.nitParte1}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="900123456"
+                  maxLength="10"
+                  autoComplete="organization-tax-id"
+                />
+              </div>
+              <span className="nit-separator">-</span>
+              <div className="input-container nit-input-small">
+                <input 
+                  type="text" 
+                  id="nitParte2" 
+                  name="nitParte2" 
+                  value={formData.nitParte2}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="7"
+                  maxLength="1"
+                />
+              </div>
             </div>
           </div>
 
@@ -195,6 +248,7 @@ function App() {
                 pattern="[0-9]{10}"
                 maxLength="10"
                 placeholder="3001234567"
+                autoComplete="tel"
               />
             </div>
             {phoneError && (
