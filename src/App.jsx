@@ -9,7 +9,7 @@ import {
   AlertCircle,
   Send,
   Mail,
-  IdCard,
+  User,
   ChevronDown
 } from 'lucide-react';
 import './App.css';
@@ -213,13 +213,13 @@ function App() {
 
           <div className="form-group">
             <div className="label-container">
-              <IdCard className="label-icon" />
+              <User className="label-icon" />
               <label htmlFor="tipoDocumento">
                 Tipo de Documento <span className="required">*</span>
               </label>
             </div>
             <div className="select-container">
-              <IdCard className="input-icon" />
+              <User className="input-icon" />
               <select 
                 id="tipoDocumento" 
                 name="tipoDocumento" 
