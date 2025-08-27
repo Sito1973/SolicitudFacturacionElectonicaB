@@ -99,18 +99,30 @@ function App() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const dataArray = await response.json();
         
-        // Actualizar campos con la respuesta
-        setFormData(prev => ({
-          ...prev,
-          razonSocial: data.razonSocial || data.nombre || '',
-          email: data.email || data.correo || ''
-        }));
-        
-        setIsConsulted(true);
+        // La respuesta es un array, tomamos el primer elemento
+        if (dataArray && dataArray.length > 0) {
+          const data = dataArray[0];
+          
+          // Verificar si se encontraron datos
+          if (data.success && data.datos_adquiriente && data.datos_adquiriente.encontrado) {
+            // Actualizar campos con la respuesta
+            setFormData(prev => ({
+              ...prev,
+              razonSocial: data.datos_adquiriente.nombre_razon_social || '',
+              email: data.datos_adquiriente.correo_electronico || ''
+            }));
+            
+            setIsConsulted(true);
+          } else {
+            throw new Error('No se encontraron datos para este documento');
+          }
+        } else {
+          throw new Error('Respuesta vacía del servidor');
+        }
       } else {
-        throw new Error('No se encontraron datos');
+        throw new Error('Error en la consulta');
       }
     } catch (error) {
       console.error('Error:', error);
