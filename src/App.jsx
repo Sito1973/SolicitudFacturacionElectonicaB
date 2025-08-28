@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Building2, 
   Phone, 
-  Hash, 
+  Hash,
+  Utensils, 
   CreditCard, 
   FileText, 
   CheckCircle, 
@@ -37,6 +38,7 @@ function App() {
 
   const [formData, setFormData] = useState({
     numeroMesa: '',
+    mesaId: '',
     tipoDocumento: '',
     numeroDocumento: '',
     razonSocial: '',
@@ -69,11 +71,16 @@ function App() {
     return null; // Para otros tipos de documento
   };
   
-  // Efecto para cargar el número de mesa desde la URL
+  // Efecto para cargar el número de mesa y mesa_id desde la URL
   useEffect(() => {
     const urlParams = window.location.pathname.split('/');
+    // URL format: /numeroMesa/mesaId
     if (urlParams.length > 1 && urlParams[1] && !isNaN(urlParams[1])) {
-      setFormData(prev => ({ ...prev, numeroMesa: urlParams[1] }));
+      setFormData(prev => ({ 
+        ...prev, 
+        numeroMesa: urlParams[1],
+        mesaId: urlParams[2] || '' // Tomar el segundo parámetro si existe
+      }));
       setMesaFromUrl(true);
     }
   }, []);
@@ -212,6 +219,7 @@ function App() {
         },
         body: JSON.stringify({
           numeroMesa: formData.numeroMesa,
+          mesaId: formData.mesaId,
           razonSocial: formData.razonSocial,
           email: formData.email,
           tipoDocumento: formData.tipoDocumento,
@@ -227,6 +235,7 @@ function App() {
         setShowCashierDialog(true);
         setFormData({
           numeroMesa: '',
+          mesaId: '',
           tipoDocumento: '',
           numeroDocumento: '',
           razonSocial: '',
@@ -275,13 +284,13 @@ function App() {
           {/* PASO 1: Campos iniciales */}
           <div className="form-group">
             <div className="label-container">
-              <Hash className="label-icon" />
+              <Utensils className="label-icon" />
               <label htmlFor="numeroMesa">
                 Número de Mesa <span className="required">*</span>
               </label>
             </div>
             <div className="input-container">
-              <Hash className="input-icon" />
+              <Utensils className="input-icon" />
               <input 
                 type="text" 
                 id="numeroMesa" 

@@ -1,5 +1,5 @@
 .container {
-  background: #eee2df;
+  background: #CEBA9F;
   border-radius: 24px;
   box-shadow: 0 25px 70px rgba(179, 106, 94, 0.25);
   width: 100%;
@@ -9,7 +9,7 @@
 }
 
 .header {
-  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+  background: linear-gradient(135deg, #0C3E50 0%, #01374C 100%);
   padding: 35px;
   text-align: center;
   position: relative;
@@ -36,7 +36,7 @@
 .default-logo {
   width: 60px;
   height: 60px;
-  color: #b36a5e;
+  color: #01374C;
 }
 
 .default-logo svg {
@@ -49,7 +49,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: #2d3748;
+  background: #071B22;
   color: white;
   padding: 8px 12px;
   border-radius: 6px;
@@ -71,7 +71,7 @@
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid #2d3748;
+  border-bottom: 6px solid #071B22;
 }
 
 .tooltip-icon {
@@ -81,7 +81,7 @@
 }
 
 h1 {
-  color: #eee2df;
+  color: #CEBA9F;
   font-size: 26px;
   font-weight: 700;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
@@ -98,7 +98,7 @@ h1 {
 
 .form-container {
   padding: 45px 35px;
-  background: #eee2df;
+  background: #CEBA9F;
 }
 
 .form-group {
@@ -116,18 +116,18 @@ h1 {
 .label-icon {
   width: 18px;
   height: 18px;
-  color: #b36a5e;
+  color: #01374C;
 }
 
 label {
-  color: #b36a5e;
+  color: #01374C;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.3px;
 }
 
 .required {
-  color: #c97c5d;
+  color: #0C3E50;
   font-weight: 700;
 }
 
@@ -146,25 +146,25 @@ label {
 .select-input {
   width: 100%;
   padding: 14px 15px 14px 45px;
-  border: 2px solid #c89f9c;
+  border: 2px solid #01374C;
   border-radius: 12px;
   font-size: 15px;
   transition: all 0.3s ease;
   background: #fbf9f8;
-  color: #333;
+  color: #071B22;
   appearance: none;
   cursor: pointer;
 }
 
 .select-input:focus {
   outline: none;
-  border-color: #b36a5e;
+  border-color: #01374C;
   background: white;
   box-shadow: 0 0 0 4px rgba(179, 106, 94, 0.12);
 }
 
 .select-input:focus ~ .input-icon {
-  color: #b36a5e;
+  color: #01374C;
 }
 
 .select-icon {
@@ -172,13 +172,13 @@ label {
   right: 15px;
   width: 20px;
   height: 20px;
-  color: #c89f9c;
+  color: #01374C;
   pointer-events: none;
   transition: color 0.3s ease;
 }
 
 .select-container:hover .select-icon {
-  color: #b36a5e;
+  color: #01374C;
 }
 
 .input-icon {
@@ -186,7 +186,7 @@ label {
   left: 15px;
   width: 20px;
   height: 20px;
-  color: #c89f9c;
+  color: #01374C;
   pointer-events: none;
   z-index: 1;
   transition: color 0.3s ease;
@@ -195,42 +195,42 @@ label {
 input {
   width: 100%;
   padding: 14px 15px 14px 45px;
-  border: 2px solid #c89f9c;
+  border: 2px solid #01374C;
   border-radius: 12px;
   font-size: 15px;
   transition: all 0.3s ease;
   background: #fbf9f8;
-  color: #333;
+  color: #071B22;
 }
 
 input:focus {
   outline: none;
-  border-color: #b36a5e;
+  border-color: #01374C;
   background: white;
   box-shadow: 0 0 0 4px rgba(179, 106, 94, 0.12);
 }
 
 input:focus ~ .input-icon {
-  color: #b36a5e;
+  color: #01374C;
 }
 
 .readonly-input {
-  background: #f4edeb !important;
+  background: #e8dfd2 !important;
   color: #666 !important;
   cursor: not-allowed;
 }
 
 .readonly-input:focus {
   box-shadow: 0 0 0 4px rgba(200, 159, 156, 0.12) !important;
-  border-color: #c89f9c !important;
+  border-color: #01374C !important;
 }
 
 input:invalid {
-  border-color: #c97c5d;
+  border-color: #0C3E50;
 }
 
 .error-message {
-  color: #c97c5d;
+  color: #0C3E50;
   font-size: 13px;
   margin-top: 6px;
   display: flex;
@@ -246,8 +246,8 @@ input:invalid {
 .submit-button, .consult-button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
-  color: #eee2df;
+  background: linear-gradient(135deg, #0C3E50 0%, #01374C 100%);
+  color: #CEBA9F;
   border: none;
   border-radius: 12px;
   font-size: 16px;
@@ -265,7 +265,7 @@ input:invalid {
 }
 
 .consult-button {
-  background: linear-gradient(135deg, #c89f9c 0%, #c97c5d 100%);
+  background: linear-gradient(135deg, #01374C 0%, #0C3E50 100%);
   box-shadow: 0 6px 20px rgba(200, 159, 156, 0.35);
 }
 
@@ -310,13 +310,13 @@ input:invalid {
 }
 
 .success-message {
-  background: #c89f9c;
-  color: #eee2df;
+  background: #01374C;
+  color: #CEBA9F;
 }
 
 .error-alert {
-  background: #c97c5d;
-  color: #eee2df;
+  background: #0C3E50;
+  color: #CEBA9F;
 }
 
 .message-icon {
@@ -341,7 +341,7 @@ input:invalid {
   height: 20px;
   border: 3px solid rgba(238, 226, 223, 0.3);
   border-radius: 50%;
-  border-top-color: #eee2df;
+  border-top-color: #CEBA9F;
   animation: spin 0.8s ease-in-out infinite;
 }
 
@@ -371,7 +371,7 @@ input:invalid {
 }
 
 .modal-content {
-  background: #eee2df;
+  background: #CEBA9F;
   border-radius: 16px;
   width: 90%;
   max-width: 450px;
@@ -388,7 +388,7 @@ input:invalid {
 }
 
 .modal-header h3 {
-  color: #b36a5e;
+  color: #01374C;
   font-size: 20px;
   font-weight: 700;
   margin: 0;
@@ -398,7 +398,7 @@ input:invalid {
 .modal-icon {
   width: 24px;
   height: 24px;
-  color: #c97c5d;
+  color: #0C3E50;
 }
 
 .modal-close {
@@ -411,12 +411,12 @@ input:invalid {
   padding: 5px;
   border-radius: 8px;
   transition: all 0.2s ease;
-  color: #c89f9c;
+  color: #01374C;
 }
 
 .modal-close:hover {
   background: rgba(200, 159, 156, 0.1);
-  color: #b36a5e;
+  color: #01374C;
 }
 
 .close-icon {
@@ -429,17 +429,17 @@ input:invalid {
 }
 
 .modal-body p {
-  color: #333;
+  color: #071B22;
   line-height: 1.6;
   margin: 0 0 15px;
   font-size: 14px;
 }
 
 .modal-example {
-  background: #f4edeb;
+  background: #e8dfd2;
   padding: 15px;
   border-radius: 10px;
-  border-left: 4px solid #c97c5d;
+  border-left: 4px solid #0C3E50;
   margin-top: 15px !important;
 }
 
@@ -450,8 +450,8 @@ input:invalid {
 }
 
 .modal-button {
-  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
-  color: #eee2df;
+  background: linear-gradient(135deg, #0C3E50 0%, #01374C 100%);
+  color: #CEBA9F;
   border: none;
   border-radius: 10px;
   padding: 12px 30px;
@@ -469,8 +469,8 @@ input:invalid {
 }
 
 .cashier-info {
-  background: #c89f9c;
-  color: #eee2df;
+  background: #01374C;
+  color: #CEBA9F;
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
@@ -478,7 +478,7 @@ input:invalid {
 }
 
 .cashier-info p {
-  color: #eee2df !important;
+  color: #CEBA9F !important;
   margin: 8px 0 !important;
   font-size: 14px;
 }
