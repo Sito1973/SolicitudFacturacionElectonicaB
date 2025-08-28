@@ -368,12 +368,13 @@ function App() {
           </div>
 
           {/* Botón Consultar */}
-          <button 
-            type="button" 
-            className="consult-button" 
-            onClick={handleConsult}
-            disabled={consultLoading || !formData.tipoDocumento || !formData.numeroDocumento}
-          >
+          <div className="form-group">
+            <button 
+              type="button" 
+              className="consult-button" 
+              onClick={handleConsult}
+              disabled={consultLoading || !formData.tipoDocumento || !formData.numeroDocumento}
+            >
             {consultLoading ? (
               <>
                 <Loader2 className="button-icon animate-spin" />
@@ -386,6 +387,7 @@ function App() {
               </>
             )}
           </button>
+          </div>
 
           {/* Mensaje de error de consulta */}
           {consultError && (
