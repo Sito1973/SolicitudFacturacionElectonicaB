@@ -55,6 +55,7 @@ function App() {
   const [showCashierDialog, setShowCashierDialog] = useState(false);
   const [mesaFromUrl, setMesaFromUrl] = useState(false);
   const [showDocumentTooltip, setShowDocumentTooltip] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
@@ -88,6 +89,15 @@ function App() {
       // Permitir números y algunas letras para documentos como pasaportes
       const cleanValue = value.replace(/[^0-9A-Za-z]/g, '');
       setFormData(prev => ({ ...prev, [name]: cleanValue }));
+    } else if (name === 'email') {
+      setFormData(prev => ({ ...prev, [name]: value }));
+      // Validar email si no está vacío
+      if (value.trim() !== '') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setEmailError(!emailRegex.test(value));
+      } else {
+        setEmailError(false);
+      }
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
@@ -180,6 +190,10 @@ function App() {
       return;
     }
     
+    if (emailError) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
@@ -211,6 +225,7 @@ function App() {
           telefono: ''
         });
         setPhoneError(false);
+        setEmailError(false);
         setIsConsulted(false);
       } else {
         throw new Error('Error en el servidor');
@@ -479,6 +494,12 @@ function App() {
                     autoComplete="email"
                   />
                 </div>
+                {emailError && (
+                  <div className="error-message">
+                    <AlertCircle className="error-icon" />
+                    Ingrese un correo electrónico válido
+                  </div>
+                )}
               </div>
 
               <div className="form-group">
