@@ -432,6 +432,25 @@ input:invalid {
   box-shadow: 0 6px 20px rgba(201, 124, 93, 0.35);
 }
 
+.cashier-info {
+  background: #c89f9c;
+  color: #eee2df;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.cashier-info p {
+  color: #eee2df !important;
+  margin: 8px 0 !important;
+  font-size: 14px;
+}
+
+.cashier-info p:last-child {
+  margin-bottom: 0 !important;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

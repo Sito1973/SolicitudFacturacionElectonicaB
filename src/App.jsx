@@ -14,7 +14,8 @@ import {
   Search,
   Loader2,
   X,
-  Info
+  Info,
+  UserCheck
 } from 'lucide-react';
 import './App.css';
 
@@ -51,6 +52,7 @@ function App() {
   const [isConsulted, setIsConsulted] = useState(false);
   const [consultError, setConsultError] = useState(false);
   const [showNoDataDialog, setShowNoDataDialog] = useState(false);
+  const [showCashierDialog, setShowCashierDialog] = useState(false);
   
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
@@ -188,7 +190,7 @@ function App() {
       });
       
       if (response.ok) {
-        setShowSuccess(true);
+        setShowCashierDialog(true);
         setFormData({
           numeroMesa: '',
           tipoDocumento: '',
@@ -199,10 +201,6 @@ function App() {
         });
         setPhoneError(false);
         setIsConsulted(false);
-        
-        setTimeout(() => {
-          setShowSuccess(false);
-        }, 5000);
       } else {
         throw new Error('Error en el servidor');
       }
@@ -368,6 +366,44 @@ function App() {
                   <button 
                     className="modal-button" 
                     onClick={() => setShowNoDataDialog(false)}
+                  >
+                    Entendido
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modal de confirmación del cajero */}
+          {showCashierDialog && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <UserCheck className="modal-icon" />
+                  <h3>Solicitud Enviada</h3>
+                  <button 
+                    className="modal-close" 
+                    onClick={() => setShowCashierDialog(false)}
+                  >
+                    <X className="close-icon" />
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p>
+                    <strong>¡Perfecto!</strong> Su solicitud de factura electrónica ha sido enviada exitosamente.
+                  </p>
+                  <p>
+                    El cajero del restaurante ya ha recibido la información necesaria para elaborar su factura electrónica.
+                  </p>
+                  <div className="cashier-info">
+                    <p><strong>📧 Recibirá su factura en el correo electrónico registrado</strong></p>
+                    <p><strong>⏱️ Tiempo estimado:</strong> 5-10 minutos</p>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button 
+                    className="modal-button" 
+                    onClick={() => setShowCashierDialog(false)}
                   >
                     Entendido
                   </button>
