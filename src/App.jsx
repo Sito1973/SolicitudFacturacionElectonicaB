@@ -53,6 +53,8 @@ function App() {
   const [consultError, setConsultError] = useState(false);
   const [showNoDataDialog, setShowNoDataDialog] = useState(false);
   const [showCashierDialog, setShowCashierDialog] = useState(false);
+  const [mesaFromUrl, setMesaFromUrl] = useState(false);
+  const [showDocumentTooltip, setShowDocumentTooltip] = useState(false);
   
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
@@ -63,6 +65,7 @@ function App() {
     const urlParams = window.location.pathname.split('/');
     if (urlParams.length > 1 && urlParams[1] && !isNaN(urlParams[1])) {
       setFormData(prev => ({ ...prev, numeroMesa: urlParams[1] }));
+      setMesaFromUrl(true);
     }
   }, []);
   
@@ -264,6 +267,8 @@ function App() {
                 required
                 placeholder="Ingrese el número de mesa"
                 autoComplete="off"
+                disabled={mesaFromUrl}
+                className={mesaFromUrl ? "readonly-input" : ""}
               />
             </div>
           </div>
@@ -303,7 +308,7 @@ function App() {
                 Número de Documento <span className="required">*</span>
               </label>
             </div>
-            <div className="input-container">
+            <div className="input-container" style={{position: 'relative'}}>
               <CreditCard className="input-icon" />
               <input 
                 type="text" 
@@ -311,11 +316,19 @@ function App() {
                 name="numeroDocumento" 
                 value={formData.numeroDocumento}
                 onChange={handleInputChange}
+                onFocus={() => setShowDocumentTooltip(true)}
+                onBlur={() => setShowDocumentTooltip(false)}
                 required
                 placeholder="Ingrese el número del documento"
                 maxLength="15"
                 autoComplete="off"
               />
+              {showDocumentTooltip && (
+                <div className="tooltip">
+                  <Info className="tooltip-icon" />
+                  <span>Ingrese el NIT sin el dígito de verificación. Ejemplo: 900123456 (no 900123456-7)</span>
+                </div>
+              )}
             </div>
           </div>
 
