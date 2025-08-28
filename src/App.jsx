@@ -396,8 +396,7 @@ function App() {
                     El cajero del restaurante ya ha recibido la información necesaria para elaborar su factura electrónica.
                   </p>
                   <div className="cashier-info">
-                    <p><strong>📧 Recibirá su factura en el correo electrónico registrado</strong></p>
-                    <p><strong>⏱️ Tiempo estimado:</strong> 5-10 minutos</p>
+                    <p><strong>✅ El cajero del restaurante ya ha recibido la información necesaria para elaborar su factura electrónica.</strong></p>
                   </div>
                 </div>
                 <div className="modal-footer">
