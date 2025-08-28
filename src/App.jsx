@@ -392,9 +392,7 @@ function App() {
                   <p>
                     <strong>¡Perfecto!</strong> Su solicitud de factura electrónica ha sido enviada exitosamente.
                   </p>
-                  <p>
-                    El cajero del restaurante ya ha recibido la información necesaria para elaborar su factura electrónica.
-                  </p>
+                  
                   <div className="cashier-info">
                     <p><strong>✅ El cajero del restaurante ya ha recibido la información necesaria para elaborar su factura electrónica.</strong></p>
                   </div>
