@@ -312,6 +312,8 @@ function App() {
               <CreditCard className="input-icon" />
               <input 
                 type="text" 
+                inputMode="numeric"
+                pattern="[0-9]*"
                 id="numeroDocumento" 
                 name="numeroDocumento" 
                 value={formData.numeroDocumento}
@@ -475,8 +477,6 @@ function App() {
                     required
                     placeholder="correo@empresa.com"
                     autoComplete="email"
-                    readOnly
-                    className="readonly-input"
                   />
                 </div>
               </div>
