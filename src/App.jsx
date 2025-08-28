@@ -61,6 +61,14 @@ function App() {
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
   const CONSULT_WEBHOOK_URL = 'https://n8niass.cocinandosonrisas.co/webhook/consultar_adquiriente_dian';
   
+  // Mapeo de tipos de documento a Odoo ID
+  const getDocumentoIDOdoo = (tipoDocumento) => {
+    if (tipoDocumento === '13') return 3; // Cédula de ciudadanía
+    if (tipoDocumento === '31') return 6; // NIT
+    if (tipoDocumento === '41') return 7; // Pasaporte
+    return null; // Para otros tipos de documento
+  };
+  
   // Efecto para cargar el número de mesa desde la URL
   useEffect(() => {
     const urlParams = window.location.pathname.split('/');
@@ -210,6 +218,7 @@ function App() {
           tipoDocumentoTexto: tiposDocumento[formData.tipoDocumento],
           numeroDocumento: formData.numeroDocumento,
           telefono: formData.telefono,
+          documentoID_Odoo: getDocumentoIDOdoo(formData.tipoDocumento),
           timestamp: new Date().toISOString()
         })
       });
