@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building2, 
   Phone, 
@@ -57,6 +57,14 @@ function App() {
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
   const CONSULT_WEBHOOK_URL = 'https://n8niass.cocinandosonrisas.co/webhook/consultar_adquiriente_dian';
+  
+  // Efecto para cargar el número de mesa desde la URL
+  useEffect(() => {
+    const urlParams = window.location.pathname.split('/');
+    if (urlParams.length > 1 && urlParams[1] && !isNaN(urlParams[1])) {
+      setFormData(prev => ({ ...prev, numeroMesa: urlParams[1] }));
+    }
+  }, []);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
