@@ -275,7 +275,7 @@ function App() {
         </div>
         <h1>
           <FileText className="header-icon" />
-          Solicitud de Factura Electrónica
+          Datos de tu Factura Electrónica
         </h1>
       </div>
       
