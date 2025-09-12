@@ -20,16 +20,22 @@ import {
 } from 'lucide-react';
 import './App.css';
 
-// Determina el logo según el puerto actual
-const getLogoSrcByPort = () => {
+// Determina el logo priorizando el dominio, con fallback por puerto
+const getLogoSrc = () => {
   try {
+    const host = typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : '';
+
+    // Por dominio
+    if (host.includes('fesumo.cocinandosonrisas.co')) return '/Logo sumo PNG si fondo .png';
+    if (host.includes('facturacion.bandidos.co')) return '/bandidos.png';
+
+    // Fallback por puerto (útil en entornos de prueba)
     const proto = typeof window !== 'undefined' ? window.location.protocol : '';
     const rawPort = typeof window !== 'undefined' ? window.location.port : '';
     const port = rawPort || (proto === 'http:' ? '80' : proto === 'https:' ? '443' : '');
 
-    if (port === '81') return '/logo-81.png';
+    if (port === '81') return '/Logo sumo PNG si fondo .png';
     if (port === '82') return '/logo-82.png';
-    // Puerto 80 (o por defecto sin puerto): bandidos
     return '/bandidos.png';
   } catch {
     return '/bandidos.png';
@@ -281,8 +287,8 @@ function App() {
       <div className="header">
         <div className="logo-container">
           <img 
-            src={getLogoSrcByPort()} 
-            alt="Bandidos Logo" 
+            src={getLogoSrc()} 
+            alt="Logo" 
             onError={(e) => {
               e.target.style.display = 'none';
               e.target.parentElement.innerHTML = '<div class="default-logo"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>';
