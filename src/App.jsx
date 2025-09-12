@@ -26,14 +26,8 @@ const getLogoSrc = () => {
     const host = typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : '';
 
     // Por dominio (mapeo explícito)
-    if (
-      host === 'facturacion.lenosyparrilla.co' ||
-      host === 'felenos.cocinandosonrisas.co' // compatibilidad
-    ) return '/Logolenos.png';
-    if (
-      host === 'facturacion.sumorestaurante.co' ||
-      host === 'fesumo.cocinandosonrisas.co' // compatibilidad
-    ) return '/logo-sumo.png';
+    if (host === 'facturacion.sumorestaurante.co') return '/logo-sumo.png';
+    if (host === 'facturacion.lenosyparrilla.co') return '/Logolenos.png';
     if (host === 'facturacion.bandidos.co') return '/bandidos.png';
 
     // Fallback por puerto (útil en entornos de prueba)

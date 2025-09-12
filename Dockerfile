@@ -28,8 +28,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy logo to nginx html folder
 COPY public/bandidos.png /usr/share/nginx/html/bandidos.png
 
-# Sumo logo (renamed for clean URL)
-COPY ["public/Logo sumo PNG si fondo .png", "/usr/share/nginx/html/logo-sumo.png"]
+# Sumo logo (clean URL)
+COPY public/logo-sumo.png /usr/share/nginx/html/logo-sumo.png
 
 # Copy Leños logo
 COPY public/Logolenos.png /usr/share/nginx/html/Logolenos.png
