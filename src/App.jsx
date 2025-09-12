@@ -25,16 +25,24 @@ const getLogoSrc = () => {
   try {
     const host = typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : '';
 
-    // Por dominio
-    if (host.includes('fesumo.cocinandosonrisas.co')) return '/Logo sumo PNG si fondo .png';
-    if (host.includes('facturacion.bandidos.co')) return '/bandidos.png';
+    // Por dominio (mapeo explícito)
+    if (
+      host === 'facturacion.lenosyparrilla.co' ||
+      host === 'felenos.cocinandosonrisas.co' // compatibilidad
+    ) return '/Logolenos.png';
+    if (
+      host === 'facturacion.sumorestaurante.co' ||
+      host === 'fesumo.cocinandosonrisas.co' // compatibilidad
+    ) return '/logo-sumo.png';
+    if (host === 'facturacion.bandidos.co') return '/bandidos.png';
 
     // Fallback por puerto (útil en entornos de prueba)
     const proto = typeof window !== 'undefined' ? window.location.protocol : '';
     const rawPort = typeof window !== 'undefined' ? window.location.port : '';
     const port = rawPort || (proto === 'http:' ? '80' : proto === 'https:' ? '443' : '');
 
-    if (port === '81') return '/Logo sumo PNG si fondo .png';
+    if (port === '81') return '/logo-sumo.png';
+    if (port === '83') return '/Logolenos.png';
     if (port === '82') return '/logo-82.png';
     return '/bandidos.png';
   } catch {

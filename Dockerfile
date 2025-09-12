@@ -28,8 +28,11 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy logo to nginx html folder
 COPY public/bandidos.png /usr/share/nginx/html/bandidos.png
 
-# Ensure Sumo logo with spaces is present (domain-based logo)
-COPY ["public/Logo sumo PNG si fondo .png", "/usr/share/nginx/html/Logo sumo PNG si fondo .png"]
+# Sumo logo (renamed for clean URL)
+COPY ["public/Logo sumo PNG si fondo .png", "/usr/share/nginx/html/logo-sumo.png"]
+
+# Copy Leños logo
+COPY public/Logolenos.png /usr/share/nginx/html/Logolenos.png
 
 # Expose port 80
 EXPOSE 80
