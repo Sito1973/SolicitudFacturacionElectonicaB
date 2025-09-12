@@ -20,6 +20,22 @@ import {
 } from 'lucide-react';
 import './App.css';
 
+// Determina el logo según el puerto actual
+const getLogoSrcByPort = () => {
+  try {
+    const proto = typeof window !== 'undefined' ? window.location.protocol : '';
+    const rawPort = typeof window !== 'undefined' ? window.location.port : '';
+    const port = rawPort || (proto === 'http:' ? '80' : proto === 'https:' ? '443' : '');
+
+    if (port === '81') return '/logo-81.png';
+    if (port === '82') return '/logo-82.png';
+    // Puerto 80 (o por defecto sin puerto): bandidos
+    return '/bandidos.png';
+  } catch {
+    return '/bandidos.png';
+  }
+};
+
 function App() {
   const tiposDocumento = {
     '11': 'Registro civil',
@@ -265,7 +281,7 @@ function App() {
       <div className="header">
         <div className="logo-container">
           <img 
-            src="/bandidos.png" 
+            src={getLogoSrcByPort()} 
             alt="Bandidos Logo" 
             onError={(e) => {
               e.target.style.display = 'none';
