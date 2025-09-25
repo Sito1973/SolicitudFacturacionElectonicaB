@@ -82,6 +82,9 @@ function App() {
   const [mesaFromUrl, setMesaFromUrl] = useState(false);
   const [showDocumentTooltip, setShowDocumentTooltip] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [showExpiredLinkDialog, setShowExpiredLinkDialog] = useState(false);
+  const [isLinkValid, setIsLinkValid] = useState(true);
   
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
@@ -95,17 +98,34 @@ function App() {
     return null; // Para otros tipos de documento
   };
   
-  // Efecto para cargar el número de mesa y mesa_id desde la URL
+  // Efecto para cargar el número de mesa y mesa_id desde la URL y validar timestamp
   useEffect(() => {
     const urlParams = window.location.pathname.split('/');
-    // URL format: /numeroMesa/mesaId
+    const queryParams = new URLSearchParams(window.location.search);
+    const timestamp = queryParams.get('ts');
+
+    // Validar timestamp si existe
+    if (timestamp) {
+      const linkTime = parseInt(timestamp) * 1000; // Convertir a milisegundos
+      const currentTime = Date.now();
+      const tenMinutesInMs = 10 * 60 * 1000; // 10 minutos en milisegundos
+
+      if (currentTime - linkTime > tenMinutesInMs) {
+        setIsLinkValid(false);
+        setShowExpiredLinkDialog(true);
+        return;
+      }
+    }
+
+    // URL format: /numeroMesa/mesaId?ts=timestamp
     if (urlParams.length > 1 && urlParams[1] && !isNaN(urlParams[1])) {
-      setFormData(prev => ({ 
-        ...prev, 
+      setFormData(prev => ({
+        ...prev,
         numeroMesa: urlParams[1],
         mesaId: urlParams[2] || '' // Tomar el segundo parámetro si existe
       }));
       setMesaFromUrl(true);
+      setIsLinkValid(true);
     }
   }, []);
   
@@ -116,6 +136,8 @@ function App() {
     if (name === 'tipoDocumento' || name === 'numeroDocumento') {
       setIsConsulted(false);
       setConsultError(false);
+      setEmailError(false);
+      setEmailErrorMessage('');
       // Limpiar campos dependientes
       setFormData(prev => ({ ...prev, razonSocial: '', email: '' }));
     }
@@ -129,13 +151,36 @@ function App() {
       const cleanValue = value.replace(/[^0-9A-Za-z]/g, '');
       setFormData(prev => ({ ...prev, [name]: cleanValue }));
     } else if (name === 'email') {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      // Limpiar automáticamente caracteres problemáticos
+      let cleanValue = value.replace(/[,;]/g, '').replace(/\s+/g, ' ').trim();
+
+      // Detectar múltiples emails por separadores o múltiples @
+      const hasSeparators = value.includes(',') || value.includes(';');
+      const atCount = (cleanValue.match(/@/g) || []).length;
+
+      setFormData(prev => ({ ...prev, [name]: cleanValue }));
+
       // Validar email si no está vacío
-      if (value.trim() !== '') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setEmailError(!emailRegex.test(value));
+      if (cleanValue.trim() !== '') {
+        if (hasSeparators) {
+          setEmailError(true);
+          setEmailErrorMessage('Solo se permite un correo electrónico');
+        } else if (atCount > 1) {
+          setEmailError(true);
+          setEmailErrorMessage('Solo se permite un correo electrónico');
+        } else {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(cleanValue)) {
+            setEmailError(true);
+            setEmailErrorMessage('Ingrese un correo electrónico válido');
+          } else {
+            setEmailError(false);
+            setEmailErrorMessage('');
+          }
+        }
       } else {
         setEmailError(false);
+        setEmailErrorMessage('');
       }
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -268,6 +313,7 @@ function App() {
         });
         setPhoneError(false);
         setEmailError(false);
+        setEmailErrorMessage('');
         setIsConsulted(false);
       } else {
         throw new Error('Error en el servidor');
@@ -305,6 +351,9 @@ function App() {
       
       <div className="form-container">
         <form onSubmit={handleSubmit}>
+          {/* Formulario solo disponible si el link es válido */}
+          {isLinkValid && (
+            <>
           {/* PASO 1: Campos iniciales */}
           <div className="form-group">
             <div className="label-container">
@@ -456,6 +505,52 @@ function App() {
             </div>
           )}
 
+          {/* Modal de link expirado */}
+          {showExpiredLinkDialog && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header" style={{color: '#dc3545'}}>
+                  <AlertCircle className="modal-icon" />
+                  <h3>Enlace Expirado</h3>
+                </div>
+                <div className="modal-body">
+                  <p>
+                    <strong>¡Lo sentimos!</strong> Este enlace de facturación electrónica ha <strong>expirado</strong>.
+                  </p>
+                  <p>
+                    Los enlaces de facturación tienen una validez de <strong>10 minutos</strong> por motivos de seguridad.
+                  </p>
+                  <div style={{
+                    background: '#f8f9fa',
+                    border: '1px solid #dee2e6',
+                    borderRadius: '8px',
+                    padding: '15px',
+                    marginTop: '15px',
+                    textAlign: 'center'
+                  }}>
+                    <p style={{margin: 0, color: '#6c757d'}}>
+                      <strong>💡 ¿Qué puedes hacer?</strong><br/>
+                      Solicita un nuevo enlace de facturación a tu mesero o en caja
+                    </p>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    className="modal-button"
+                    style={{background: '#dc3545', borderColor: '#dc3545'}}
+                    onClick={() => {
+                      setShowExpiredLinkDialog(false);
+                      // Opcional: redirigir o recargar la página
+                      window.location.href = '/';
+                    }}
+                  >
+                    Entendido
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Modal de confirmación del cajero */}
           {showCashierDialog && (
             <div className="modal-overlay">
@@ -541,7 +636,7 @@ function App() {
                 {emailError && (
                   <div className="error-message">
                     <AlertCircle className="error-icon" />
-                    Ingrese un correo electrónico válido
+                    {emailErrorMessage || 'Ingrese un correo electrónico válido'}
                   </div>
                 )}
               </div>
@@ -590,6 +685,7 @@ function App() {
                 )}
               </button>
             </>
+          )}
           )}
 
           {showSuccess && (
