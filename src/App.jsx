@@ -335,8 +335,8 @@ function App() {
     }
   };
 
-  return (
-    <div className="container">
+  const renderContent = () => (
+    <>
       <div className="header">
         <div className="logo-container">
           <img
@@ -354,7 +354,7 @@ function App() {
         </h1>
       </div>
 
-      <div className="form-container" style={!isLinkValid ? {opacity: 0.5, pointerEvents: 'none'} : {}}>
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
           {/* PASO 1: Campos iniciales */}
           <div className="form-group">
@@ -452,18 +452,18 @@ function App() {
               onClick={handleConsult}
               disabled={consultLoading || !formData.tipoDocumento || !formData.numeroDocumento || !isLinkValid}
             >
-            {consultLoading ? (
-              <>
-                <Loader2 className="button-icon animate-spin" />
-                Consultando...
-              </>
-            ) : (
-              <>
-                <Search className="button-icon" />
-                Consultar
-              </>
-            )}
-          </button>
+              {consultLoading ? (
+                <>
+                  <Loader2 className="button-icon animate-spin" />
+                  Consultando...
+                </>
+              ) : (
+                <>
+                  <Search className="button-icon" />
+                  Consultar
+                </>
+              )}
+            </button>
           </div>
 
           {/* Mensaje de error de consulta */}
@@ -663,52 +663,59 @@ function App() {
           )}
         </form>
       </div>
+    </>
+  );
 
-      {/* Modal de link expirado */}
-      {showExpiredLinkDialog && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header" style={{color: '#dc3545'}}>
-              <AlertCircle className="modal-icon" />
-              <h3>Enlace Expirado</h3>
-            </div>
-            <div className="modal-body">
-              <p>
-                <strong>¡Lo sentimos!</strong> Este enlace de facturación electrónica ha <strong>expirado</strong>.
+  const renderExpiredModal = () => {
+    if (!showExpiredLinkDialog) {
+      return null;
+    }
+
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="modal-header" style={{color: '#dc3545'}}>
+            <AlertCircle className="modal-icon" />
+            <h3>Enlace Expirado</h3>
+          </div>
+          <div className="modal-body">
+            <p>
+              <strong>¡Lo sentimos!</strong> Este enlace de facturación electrónica ha <strong>expirado</strong>.
+            </p>
+            <p>
+              Los enlaces de facturación tienen una validez de <strong>10 minutos</strong> por motivos de seguridad.
+            </p>
+            <div style={{
+              background: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '8px',
+              padding: '15px',
+              marginTop: '15px',
+              textAlign: 'center'
+            }}>
+              <p style={{margin: 0, color: '#6c757d'}}>
+                <strong>💡 ¿Qué puedes hacer?</strong><br/>
+                Solicita un nuevo enlace de facturación a tu mesero o en caja
               </p>
-              <p>
-                Los enlaces de facturación tienen una validez de <strong>10 minutos</strong> por motivos de seguridad.
-              </p>
-              <div style={{
-                background: '#f8f9fa',
-                border: '1px solid #dee2e6',
-                borderRadius: '8px',
-                padding: '15px',
-                marginTop: '15px',
-                textAlign: 'center'
-              }}>
-                <p style={{margin: 0, color: '#6c757d'}}>
-                  <strong>💡 ¿Qué puedes hacer?</strong><br/>
-                  Solicita un nuevo enlace de facturación a tu mesero o en caja
-                </p>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                className="modal-button"
-                style={{background: '#dc3545', borderColor: '#dc3545'}}
-                onClick={() => {
-                  setShowExpiredLinkDialog(false);
-                  // Opcional: redirigir o recargar la página
-                  window.location.href = '/';
-                }}
-              >
-                Entendido
-              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
+    );
+  };
+
+  if (!isLinkValid) {
+    return (
+      <div className="container">
+        {renderExpiredModal()}
+      </div>
+    );
+  }
+
+  return (
+    <div className="container">
+      {renderContent()}
+      {renderExpiredModal()}
     </div>
   );
 }
