@@ -1,5 +1,5 @@
 # Use Node.js LTS version
-FROM node:18 AS builder
+FROM node:20 AS builder
 
 # Set working directory
 WORKDIR /app
