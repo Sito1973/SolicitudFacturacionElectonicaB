@@ -394,7 +394,7 @@ function App() {
           </div>
 
           {/* Número de Documento */}
-          <div className="relative" style={{ zIndex: showDocumentTooltip ? 60 : 'auto' }}>
+          <div className="relative">
             <div className="flex items-center gap-2 mb-2.5">
               <CreditCard className="w-[18px] h-[18px] text-primary-400" />
               <label htmlFor="numeroDocumento" className="text-sm font-semibold text-neutral-400 tracking-wide">
@@ -421,12 +421,11 @@ function App() {
             <AnimatePresence>
               {showDocumentTooltip && (
                 <motion.div
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-0 right-0 mt-2 glass-dark rounded-lg px-3 py-2 text-xs text-neutral-300 flex items-center gap-1.5 shadow-lg shadow-black/30"
-                  style={{ zIndex: 100 }}
+                  className="mt-2 glass-dark rounded-lg px-3 py-2 text-xs text-neutral-300 flex items-center gap-1.5"
                 >
                   <Info className="w-3.5 h-3.5 shrink-0 text-primary-400" />
                   <span>Ingrese el NIT sin el dígito de verificación. Ejemplo: 900123456 (no 900123456-7)</span>
