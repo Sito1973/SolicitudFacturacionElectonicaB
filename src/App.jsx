@@ -313,22 +313,29 @@ function App() {
   const renderContent = () => (
     <>
       {/* ── Header ──────────────────────────────────────── */}
-      <div className="bg-gradient-to-br from-primary-700 to-primary-800 px-8 py-9 text-center relative max-sm:px-7 max-sm:py-7">
-        <div className="w-[130px] h-[130px] mx-auto mb-5 rounded-full flex items-center justify-center overflow-hidden drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] ring-2 ring-white/10 max-sm:w-[110px] max-sm:h-[110px]">
-          <img
-            src={getLogoSrc()}
-            alt="Logo"
-            className="w-[105%] h-[105%] object-cover"
-            onError={logoErrorHandler}
-          />
+      <div className="relative px-8 py-9 text-center overflow-hidden max-sm:px-7 max-sm:py-7"
+           style={{ background: 'linear-gradient(135deg, #096da0 0%, #05507a 40%, #01374C 100%)' }}>
+        {/* Header glow effects */}
+        <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-primary-400/[0.15] rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[250px] h-[250px] bg-accent-500/[0.08] rounded-full blur-[60px] pointer-events-none" />
+
+        <div className="relative z-10">
+          <div className="w-[130px] h-[130px] mx-auto mb-5 rounded-full flex items-center justify-center overflow-hidden drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] ring-2 ring-white/15 max-sm:w-[110px] max-sm:h-[110px]">
+            <img
+              src={getLogoSrc()}
+              alt="Logo"
+              className="w-[105%] h-[105%] object-cover"
+              onError={logoErrorHandler}
+            />
+          </div>
+          <h1
+            className="text-accent-400 text-[26px] font-bold flex items-center justify-center gap-2.5 max-sm:text-[22px]"
+            style={{ textShadow: '0 2px 10px rgba(0,0,0,0.4)' }}
+          >
+            <FileText className="w-7 h-7 max-sm:w-6 max-sm:h-6" />
+            Datos de tu Factura Electrónica
+          </h1>
         </div>
-        <h1
-          className="text-accent-400 text-[26px] font-bold flex items-center justify-center gap-2.5 max-sm:text-[22px]"
-          style={{ textShadow: '2px 2px 6px rgba(0,0,0,0.3)' }}
-        >
-          <FileText className="w-7 h-7 max-sm:w-6 max-sm:h-6" />
-          Datos de tu Factura Electrónica
-        </h1>
       </div>
 
       {/* ── Form ────────────────────────────────────────── */}
@@ -343,21 +350,18 @@ function App() {
                 Número de Mesa <span className="text-primary-400 font-bold">*</span>
               </label>
             </div>
-            <div className="relative flex items-center">
-              <Utensils className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
-              <input
-                type="text"
-                id="numeroMesa"
-                name="numeroMesa"
-                value={formData.numeroMesa}
-                onChange={handleInputChange}
-                required
-                placeholder="Ingrese el número de mesa"
-                autoComplete="off"
-                disabled={mesaFromUrl || !isLinkValid}
-                className={mesaFromUrl ? "glass-input-readonly" : "glass-input"}
-              />
-            </div>
+            <input
+              type="text"
+              id="numeroMesa"
+              name="numeroMesa"
+              value={formData.numeroMesa}
+              onChange={handleInputChange}
+              required
+              placeholder="Ingrese el número de mesa"
+              autoComplete="off"
+              disabled={mesaFromUrl || !isLinkValid}
+              className={mesaFromUrl ? "glass-input-readonly" : "glass-input"}
+            />
           </div>
 
           {/* Tipo de Documento */}
@@ -369,7 +373,6 @@ function App() {
               </label>
             </div>
             <div className="relative flex items-center">
-              <User className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
               <select
                 id="tipoDocumento"
                 name="tipoDocumento"
@@ -386,7 +389,7 @@ function App() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-4 w-5 h-5 text-primary-400/60 pointer-events-none" />
+              <ChevronDown className="absolute right-3 w-5 h-5 text-primary-400/60 pointer-events-none" />
             </div>
           </div>
 
@@ -398,8 +401,7 @@ function App() {
                 Número de Documento <span className="text-primary-400 font-bold">*</span>
               </label>
             </div>
-            <div className="relative flex items-center">
-              <CreditCard className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
+            <div className="relative">
               <input
                 type="text"
                 inputMode="numeric"
@@ -491,22 +493,19 @@ function App() {
                       Razón Social <span className="text-primary-400 font-bold">*</span>
                     </label>
                   </div>
-                  <div className="relative flex items-center">
-                    <Building2 className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
-                    <input
-                      type="text"
-                      id="razonSocial"
-                      name="razonSocial"
-                      value={formData.razonSocial}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="Razón social de la empresa"
-                      autoComplete="organization"
-                      readOnly
-                      className="glass-input-readonly"
-                      disabled={!isLinkValid}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    id="razonSocial"
+                    name="razonSocial"
+                    value={formData.razonSocial}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Razón social de la empresa"
+                    autoComplete="organization"
+                    readOnly
+                    className="glass-input-readonly"
+                    disabled={!isLinkValid}
+                  />
                 </div>
 
                 {/* Correo Electrónico */}
@@ -517,21 +516,18 @@ function App() {
                       Correo Electrónico <span className="text-primary-400 font-bold">*</span>
                     </label>
                   </div>
-                  <div className="relative flex items-center">
-                    <Mail className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="correo@empresa.com"
-                      autoComplete="email"
-                      disabled={!isLinkValid}
-                      className="glass-input"
-                    />
-                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="correo@empresa.com"
+                    autoComplete="email"
+                    disabled={!isLinkValid}
+                    className="glass-input"
+                  />
                   <AnimatePresence>
                     {emailError && (
                       <motion.div
@@ -555,23 +551,20 @@ function App() {
                       Teléfono <span className="text-primary-400 font-bold">*</span> (10 dígitos)
                     </label>
                   </div>
-                  <div className="relative flex items-center">
-                    <Phone className="absolute left-4 w-5 h-5 text-primary-400/60 pointer-events-none z-10" />
-                    <input
-                      type="tel"
-                      id="telefono"
-                      name="telefono"
-                      value={formData.telefono}
-                      onChange={handleInputChange}
-                      required
-                      pattern="[0-9]{10}"
-                      maxLength="10"
-                      placeholder="3001234567"
-                      autoComplete="tel"
-                      disabled={!isLinkValid}
-                      className="glass-input"
-                    />
-                  </div>
+                  <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                    value={formData.telefono}
+                    onChange={handleInputChange}
+                    required
+                    pattern="[0-9]{10}"
+                    maxLength="10"
+                    placeholder="3001234567"
+                    autoComplete="tel"
+                    disabled={!isLinkValid}
+                    className="glass-input"
+                  />
                   <AnimatePresence>
                     {phoneError && (
                       <motion.div
@@ -831,8 +824,8 @@ function App() {
     <div className="min-h-screen flex items-center justify-center p-5 relative">
       {/* Ambient background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary-500/[0.06] rounded-full blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-accent-500/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-primary-500/[0.12] rounded-full blur-[120px]" />
+        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-accent-500/[0.08] rounded-full blur-[100px]" />
       </div>
 
       <motion.div

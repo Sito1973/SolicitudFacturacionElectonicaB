@@ -44,7 +44,7 @@
 
   .glass-input {
     @apply w-full rounded-xl bg-neutral-800/60 border border-neutral-600/50
-           backdrop-blur-sm text-white px-4 py-3.5 pl-12 text-sm
+           backdrop-blur-sm text-white px-4 py-3.5 text-sm
            focus:border-primary-500 focus:outline-none focus:ring-2
            focus:ring-primary-500/20 transition-all
            placeholder-neutral-500;
@@ -52,7 +52,7 @@
 
   .glass-select {
     @apply w-full rounded-xl bg-neutral-800/60 border border-neutral-600/50
-           backdrop-blur-sm text-white px-4 py-3.5 pl-12 text-sm
+           backdrop-blur-sm text-white px-4 py-3.5 pr-10 text-sm
            focus:border-primary-500 focus:outline-none focus:ring-2
            focus:ring-primary-500/20 transition-all appearance-none
            cursor-pointer;
@@ -60,7 +60,7 @@
 
   .glass-input-readonly {
     @apply w-full rounded-xl bg-neutral-800/40 border border-neutral-600/50
-           backdrop-blur-sm text-neutral-400 px-4 py-3.5 pl-12 text-sm
+           backdrop-blur-sm text-neutral-400 px-4 py-3.5 text-sm
            cursor-not-allowed focus:outline-none;
   }
 
