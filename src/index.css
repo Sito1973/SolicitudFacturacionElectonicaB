@@ -1,15 +1,107 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "tailwindcss";
+
+/* ── Custom Theme (Tailwind v4 @theme) ─────────────────── */
+@theme {
+  --color-primary-50:  #e6f5fb;
+  --color-primary-100: #b3e0f2;
+  --color-primary-200: #80cbe9;
+  --color-primary-300: #4db5e0;
+  --color-primary-400: #2ba0d4;
+  --color-primary-500: #0d8ac5;
+  --color-primary-600: #096da0;
+  --color-primary-700: #05507a;
+  --color-primary-800: #01374C;
+  --color-primary-900: #001f2d;
+
+  --color-accent-50:  #fdf6f0;
+  --color-accent-100: #f8e6d4;
+  --color-accent-200: #f2d4b5;
+  --color-accent-300: #edc296;
+  --color-accent-400: #e8b990;
+  --color-accent-500: #CEBA9F;
+  --color-accent-600: #b09878;
+  --color-accent-700: #8a7558;
+  --color-accent-800: #645340;
+  --color-accent-900: #3e3228;
+
+  --color-neutral-400: #6b6b6b;
+  --color-neutral-500: #464545;
+  --color-neutral-600: #2f2f2f;
+  --color-neutral-700: #1b1b1b;
+  --color-neutral-800: #141414;
+  --color-neutral-900: #0a0a0a;
 }
 
+/* ── Glass Utility Classes ─────────────────────────────── */
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-lg bg-neutral-700/80 border border-white/10;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-lg bg-neutral-900/90 border border-white/5;
+  }
+
+  .glass-input {
+    @apply w-full rounded-xl bg-neutral-800/60 border border-neutral-600/50
+           backdrop-blur-sm text-white px-4 py-3.5 pl-12 text-sm
+           focus:border-primary-500 focus:outline-none focus:ring-2
+           focus:ring-primary-500/20 transition-all
+           placeholder-neutral-500;
+  }
+
+  .glass-select {
+    @apply w-full rounded-xl bg-neutral-800/60 border border-neutral-600/50
+           backdrop-blur-sm text-white px-4 py-3.5 pl-12 text-sm
+           focus:border-primary-500 focus:outline-none focus:ring-2
+           focus:ring-primary-500/20 transition-all appearance-none
+           cursor-pointer;
+  }
+
+  .glass-input-readonly {
+    @apply w-full rounded-xl bg-neutral-800/40 border border-neutral-600/50
+           backdrop-blur-sm text-neutral-400 px-4 py-3.5 pl-12 text-sm
+           cursor-not-allowed focus:outline-none;
+  }
+
+  .btn-primary {
+    @apply w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider
+           bg-gradient-to-r from-primary-600 to-primary-500
+           text-white border border-primary-500/30
+           shadow-lg shadow-primary-500/20
+           hover:shadow-xl hover:shadow-primary-500/30
+           hover:-translate-y-0.5
+           active:translate-y-0
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0
+           disabled:shadow-none
+           transition-all duration-300
+           flex items-center justify-center gap-2.5;
+  }
+
+  .btn-secondary {
+    @apply w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider
+           bg-neutral-800/60 border border-primary-500/30
+           text-primary-400
+           hover:bg-primary-500/10 hover:border-primary-500/50
+           hover:-translate-y-0.5
+           active:translate-y-0
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0
+           transition-all duration-300
+           flex items-center justify-center gap-2.5;
+  }
+}
+
+/* ── Base body style ───────────────────────────────────── */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #c97c5d 0%, #b36a5e 100%);
+  background-color: #0a0a0a;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+}
+
+/* ── Animate-spin for loading ──────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
