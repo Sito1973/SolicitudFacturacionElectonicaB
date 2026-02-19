@@ -4,11 +4,11 @@ FROM node:18 AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package.json only (not lock file, to resolve native bindings for Linux)
+COPY package.json ./
 
-# Install all dependencies (including devDependencies for build)
-RUN npm ci --include=dev
+# Install dependencies fresh for the target platform
+RUN npm install --include=dev
 
 # Copy source code
 COPY . .
