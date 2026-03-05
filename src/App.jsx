@@ -92,7 +92,7 @@ function App() {
 
   // URLs de webhooks
   const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://n8niass.cocinandosonrisas.co/webhook/factura-electronic-Bandidos';
-  const CONSULT_WEBHOOK_URL = 'https://n8niass.cocinandosonrisas.co/webhook/consultar_adquiriente_dian';
+  const CONSULT_WEBHOOK_URL = 'https://odoo.cocinandosonrisas.co/api/dian/get_acquirer';
 
   // Mapeo de tipos de documento a Odoo ID
   const getDocumentoIDOdoo = (tipoDocumento) => {
