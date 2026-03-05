@@ -192,9 +192,6 @@ function App() {
     setConsultError(false);
 
     try {
-      console.log('[DIAN] URL:', CONSULT_WEBHOOK_URL);
-      console.log('[DIAN] Enviando:', { tipoDocumento: formData.tipoDocumento, numeroDocumento: formData.numeroDocumento });
-
       const response = await fetch(CONSULT_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -204,32 +201,13 @@ function App() {
         })
       });
 
-      console.log('[DIAN] HTTP status:', response.status);
-      console.log('[DIAN] response.ok:', response.ok);
-
       if (response.ok) {
-        const rawText = await response.text();
-        console.log('[DIAN] Raw response:', rawText);
-
-        let dataArray;
-        try {
-          dataArray = JSON.parse(rawText);
-        } catch (parseErr) {
-          console.error('[DIAN] JSON parse error:', parseErr);
-          setShowNoDataDialog(true);
-          setConsultError(false);
-          return;
-        }
-
-        console.log('[DIAN] Parsed data:', JSON.stringify(dataArray, null, 2));
+        const dataArray = await response.json();
 
         if (dataArray && dataArray.length > 0) {
           const data = dataArray[0];
-          console.log('[DIAN] data[0]:', JSON.stringify(data, null, 2));
-          console.log('[DIAN] data.success:', data.success, typeof data.success);
 
           if (data.success === false) {
-            console.log('[DIAN] -> success === false, mostrando NoDataDialog');
             setShowNoDataDialog(true);
             setConsultError(false);
           } else if (data.success &&
@@ -239,7 +217,6 @@ function App() {
                      data.ResponseDian.GetAcquirerResponse.GetAcquirerResult.StatusCode === "200") {
 
             const result = data.ResponseDian.GetAcquirerResponse.GetAcquirerResult;
-            console.log('[DIAN] -> EXITO! ReceiverName:', result.ReceiverName, 'ReceiverEmail:', result.ReceiverEmail);
             setFormData(prev => ({
               ...prev,
               razonSocial: result.ReceiverName || '',
@@ -247,23 +224,19 @@ function App() {
             }));
             setIsConsulted(true);
           } else {
-            console.log('[DIAN] -> Estructura no esperada, mostrando NoDataDialog');
             setShowNoDataDialog(true);
             setConsultError(false);
           }
         } else {
-          console.log('[DIAN] -> Array vacío o null');
           setShowNoDataDialog(true);
           setConsultError(false);
         }
       } else {
-        const errorText = await response.text();
-        console.error('[DIAN] HTTP error:', response.status, errorText);
         setShowNoDataDialog(true);
         setConsultError(false);
       }
     } catch (error) {
-      console.error('[DIAN] Catch error:', error.message, error);
+      console.error('Error:', error);
       setShowNoDataDialog(true);
       setConsultError(false);
     } finally {
